@@ -3,6 +3,7 @@
   "name": "AV€NIR - Patrimoine",
   "short_name": "AV€NIR",
   "description": "Vue d’ensemble du patrimoine",
+  "id": "/Avenir/",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

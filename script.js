@@ -27,6 +27,8 @@ const accountsList = document.getElementById("accountsList");
 const totalAmount = document.getElementById("totalAmount");
 const privacyToggleButton = document.getElementById("privacyToggleButton");
 const PRIVACY_MODE_KEY = "avenir-mode-confidentiel-v1";
+const PREVIOUS_TOTAL_KEY = "avenir-patrimoine-precedent-v1";
+const patrimoineEvolution = document.getElementById("patrimoineEvolution");
 
 function isPrivacyModeEnabled() {
   return localStorage.getItem(PRIVACY_MODE_KEY) === "true";

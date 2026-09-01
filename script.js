@@ -629,3 +629,124 @@ function confirmAccountDeletion(accountName) {
 function renderSettings() {
   if (!settingsAccounts) return;
   se
+
+/* ===== GESTION DU CODE PIN & DÉMARRAGE ===== */
+
+const PIN_ENABLED_KEY = "avenir-pin-enabled-v1";
+const PIN_HASH_KEY = "avenir-pin-hash-v1";
+
+const pinLockScreen = document.getElementById("pinLockScreen");
+const pinDots = document.getElementById("pinDots");
+const pinLockMessage = document.getElementById("pinLockMessage");
+const pinKeypadMount = document.querySelector(".pin-keypad-mount");
+
+let enteredPin = "";
+
+function isPinEnabled() {
+  return localStorage.getItem(PIN_ENABLED_KEY) === "true" && Boolean(localStorage.getItem(PIN_HASH_KEY));
+}
+
+// Fonction de hachage simple du PIN (à adapter selon ta méthode)
+function hashPin(pin) {
+  let hash = 0;
+  for (let i = 0; i < pin.length; i++) {
+    const char = pin.charCodeAt(i);
+    hash = (hash << 5) - hash + char;
+    hash |= 0;
+  }
+  return String(hash);
+}
+
+function updatePinDots() {
+  if (!pinDots) return;
+  const dots = pinDots.querySelectorAll("span");
+  dots.forEach((dot, index) => {
+    dot.classList.toggle("filled", index < enteredPin.length);
+  });
+  pinDots.setAttribute("aria-label", `Code saisi : ${enteredPin.length} chiffre(s) sur 6`);
+}
+
+function verifyPin() {
+  const savedHash = localStorage.getItem(PIN_HASH_KEY);
+  if (hashPin(enteredPin) === savedHash) {
+    unlockApp();
+  } else {
+    if (pinLockMessage) pinLockMessage.textContent = "Code incorrect. Réessayez.";
+    if (pinLockScreen) pinLockScreen.classList.add("shake");
+    setTimeout(() => {
+      if (pinLockScreen) pinLockScreen.classList.remove("shake");
+      enteredPin = "";
+      updatePinDots();
+    }, 400);
+  }
+}
+
+function handleKeyPress(digit) {
+  if (enteredPin.length < 6) {
+    enteredPin += digit;
+    updatePinDots();
+    if (enteredPin.length === 6) {
+      setTimeout(verifyPin, 100);
+    }
+  }
+}
+
+function handleBackspace() {
+  if (enteredPin.length > 0) {
+    enteredPin = enteredPin.slice(0, -1);
+    updatePinDots();
+  }
+}
+
+function renderKeypad() {
+  if (!pinKeypadMount) return;
+  pinKeypadMount.innerHTML = "";
+
+  const keypadGrid = document.createElement("div");
+  keypadGrid.className = "pin-keypad";
+
+  const buttons = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "", "0", "⌫"];
+
+  buttons.forEach(val => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "pin-key";
+    
+    if (val === "") {
+      btn.classList.add("empty");
+      btn.disabled = true;
+    } else if (val === "⌫") {
+      btn.classList.add("backspace");
+      btn.textContent = "⌫";
+      btn.addEventListener("click", handleBackspace);
+    } else {
+      btn.textContent = val;
+      btn.addEventListener("click", () => handleKeyPress(val));
+    }
+
+    keypadGrid.appendChild(btn);
+  });
+
+  pinKeypadMount.appendChild(keypadGrid);
+}
+
+function unlockApp() {
+  if (pinLockScreen) pinLockScreen.hidden = true;
+  document.documentElement.classList.remove("pin-boot");
+  document.documentElement.classList.remove("app-boot");
+}
+
+function initSecurity() {
+  if (isPinEnabled()) {
+    if (pinLockScreen) pinLockScreen.hidden = false;
+    renderKeypad();
+    // Le retrait de app-boot se fait uniquement à la saisie du bon PIN
+  } else {
+    // Si pas de PIN configuré, on déverrouille direct
+    unlockApp();
+  }
+}
+
+// Lancement au chargement du script
+initSecurity();
+  

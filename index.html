@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestion de Patrimoine</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <h1>Mon Patrimoine</h1>
+      <p class="subtitle">Suivi et évolution des comptes</p>
+    </header>
+
+    <main class="dashboard">
+      <!-- Carte Total Patrimoine -->
+      <section class="card total-card">
+        <div class="total-header">
+          <span class="total-label">TOTAL PATRIMOINE</span>
+          <span id="patrimoineEvolution" class="total-evolution">↗ +0,00%</span>
+        </div>
+        <div class="total-amount" id="totalAmount">0,00 €</div>
+        <div class="total-footer">
+          <span class="ref-label">Référence précédente :</span>
+          <span id="previousRefAmount" class="ref-amount">93 400,00 €</span>
+          <button id="commitBtn" class="btn-secondary" title="Fixer ce total comme nouvelle référence">
+            Fixer le seuil 📌
+          </button>
+        </div>
+      </section>
+
+      <!-- Section Comptes -->
+      <section class="card accounts-card">
+        <div class="card-header">
+          <h2>Mes Comptes</h2>
+          <button id="addAccountBtn" class="btn-primary">+ Ajouter un compte</button>
+        </div>
+        <div id="accountsList" class="accounts-list">
+          <!-- Les comptes seront générés en JS -->
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -2,6 +2,9 @@ const STORAGE_KEY = "avenir-comptes-v6";
 const LEGACY_STORAGE_KEY = "avenir-comptes-v5";
 const UPDATED_KEY = "avenir-derniere-mise-a-jour-v6";
 const LEGACY_UPDATED_KEY = "avenir-derniere-mise-a-jour-v5";
+const BASE_TOTAL = 93400;
+const patrimoineEvolution = document.getElementById("patrimoineEvolution");
+
 
 const ICONS = {
   "revolut": "./revolut.png",
@@ -277,6 +280,15 @@ function formatAmount(value) {
   }).format(value);
 }
 
+function updateEvolution(currentTotal) {
+  if (!patrimoineEvolution) return;
+  const percentage = ((currentTotal - BASE_TOTAL) / BASE_TOTAL) * 100;
+  const sign = percentage >= 0 ? "+" : "";
+  patrimoineEvolution.textContent = `↗ ${sign}${percentage.toFixed(2)}%`;
+}
+
+
+
 /* ===== AV€NIR V10.8 : animation fiable des montants ===== */
 const amountAnimations = new WeakMap();
 const prefersReducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
@@ -470,6 +482,7 @@ function renderAccounts() {
       {
         duration: firstRender ? 1100 : 720,
         suffix: " €"
+        onUpdate: (val) => updateEvolution(val)
       }
     );
   }

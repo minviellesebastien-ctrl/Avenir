@@ -3,7 +3,6 @@ const LEGACY_STORAGE_KEY = "avenir-comptes-v5";
 const UPDATED_KEY = "avenir-derniere-mise-a-jour-v6";
 const LEGACY_UPDATED_KEY = "avenir-derniere-mise-a-jour-v5";
 const BASE_TOTAL = 93400;
-const patrimoineEvolution = document.getElementById("patrimoineEvolution");
 
 
 const ICONS = {
@@ -481,7 +480,7 @@ function renderAccounts() {
       calculateTotal(),
       {
         duration: firstRender ? 1100 : 720,
-        suffix: " €"
+        suffix: " €",
         onUpdate: (val) => updateEvolution(val)
       }
     );

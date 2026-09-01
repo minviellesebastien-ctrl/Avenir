@@ -2548,3 +2548,23 @@ html.privacy-boot.privacy-boot-finish .account-value {
   user-select: none;
   -webkit-user-select: none;
 }
+
+/* Évolution du patrimoine */
+.total-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.total-evolution {
+  color: var(--orange, #ff4b0b);
+  font-weight: 800;
+  font-size: 17px;
+}
+
+body.privacy-mode .total-evolution {
+  filter: blur(8px);
+  user-select: none;
+  pointer-events: none;
+}

@@ -683,7 +683,35 @@ function readSettingsValues() {
 }
 
 function saveFromSettings() {
+  const ancienTotal = calculateTotal();
+
   readSettingsValues();
+
+  const nouveauTotal = calculateTotal();
+
+  if (ancienTotal > 0) {
+    const evolution =
+      ((nouveauTotal - ancienTotal) / ancienTotal) * 100;
+
+    localStorage.setItem(
+      PREVIOUS_TOTAL_KEY,
+      String(ancienTotal)
+    );
+
+    if (patrimoineEvolution) {
+      const symbole =
+        evolution > 0 ? "↗" :
+        evolution < 0 ? "↘" :
+        "→";
+
+      const signe =
+        evolution > 0 ? "+" : "";
+
+      patrimoineEvolution.textContent =
+        `${symbole} ${signe}${evolution.toFixed(1)} %`;
+    }
+  }
+
   saveAccounts();
   renderAccounts();
 }

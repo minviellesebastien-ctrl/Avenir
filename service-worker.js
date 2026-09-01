@@ -1,4 +1,4 @@
-const CACHE_NAME = "avenir-evolution2";
+const CACHE_NAME = "avenir-evolution3";
 const FILES = [
   "./",
   "./index.html",

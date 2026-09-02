@@ -71,6 +71,21 @@ button {
   letter-spacing: .3px;
 }
 
+.total-label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.total-evolution {
+  color: var(--orange);
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: .1px;
+  white-space: nowrap;
+}
+
 .total-amount {
   margin-top: 10px;
   font-size: clamp(45px, 12vw, 72px);

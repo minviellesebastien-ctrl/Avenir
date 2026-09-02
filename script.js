@@ -1,5 +1,7 @@
 const STORAGE_KEY = "avenir-comptes-v6";
 const LEGACY_STORAGE_KEY = "avenir-comptes-v5";
+const EVOLUTION_REFERENCE_KEY = "avenir-total-reference-v1";
+const INITIAL_EVOLUTION_REFERENCE = 93400;
 const UPDATED_KEY = "avenir-derniere-mise-a-jour-v6";
 const LEGACY_UPDATED_KEY = "avenir-derniere-mise-a-jour-v5";
 
@@ -25,6 +27,7 @@ const DEFAULT_ACCOUNTS = [
 
 const accountsList = document.getElementById("accountsList");
 const totalAmount = document.getElementById("totalAmount");
+const totalEvolution = document.getElementById("totalEvolution");
 const privacyToggleButton = document.getElementById("privacyToggleButton");
 const PRIVACY_MODE_KEY = "avenir-mode-confidentiel-v1";
 const PREVIOUS_TOTAL_KEY = "avenir-patrimoine-precedent-v1";
@@ -421,6 +424,52 @@ function calculateTotal() {
     (total, account) => total + parseAmount(account.amount),
     0
   );
+}
+
+function getEvolutionReference() {
+  const saved = Number.parseFloat(
+    localStorage.getItem(EVOLUTION_REFERENCE_KEY)
+  );
+
+  if (Number.isFinite(saved) && saved > 0) {
+    return saved;
+  }
+
+  localStorage.setItem(
+    EVOLUTION_REFERENCE_KEY,
+    String(INITIAL_EVOLUTION_REFERENCE)
+  );
+
+  return INITIAL_EVOLUTION_REFERENCE;
+}
+
+function renderTotalEvolution() {
+  if (!totalEvolution) return;
+
+  const currentTotal = calculateTotal();
+  const reference = getEvolutionReference();
+
+  if (!reference) return;
+
+  const evolution = ((currentTotal - reference) / reference) * 100;
+  const arrow = evolution >= 0 ? "↗" : "↘";
+  const sign = evolution >= 0 ? "+" : "";
+
+  totalEvolution.textContent =
+    `${arrow} ${sign}${evolution.toFixed(2).replace(".", ",")} %`;
+}
+
+function updateTotalEvolutionReference() {
+  const currentTotal = calculateTotal();
+
+  if (!Number.isFinite(currentTotal) || currentTotal <= 0) return;
+
+  localStorage.setItem(
+    EVOLUTION_REFERENCE_KEY,
+    String(currentTotal)
+  );
+
+  renderTotalEvolution();
 }
 
 function renderAccounts() {

@@ -3,7 +3,7 @@
   "name": "AV€NIR - Patrimoine",
   "short_name": "AV€NIR",
   "description": "Vue d’ensemble du patrimoine",
-  "id": "/Avenir/",
+  "id": "/Mon_Avenir/",
   "start_url": "https://minviellesebastien-ctrl.github.io/Avenir/",
   "scope": "https://minviellesebastien-ctrl.github.io/Avenir/",
   "display": "standalone",

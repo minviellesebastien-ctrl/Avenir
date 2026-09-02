@@ -1084,6 +1084,8 @@ saveSettingsButton.addEventListener("click", async () => {
 
   saveFromSettings();
 
+  updateTotalEvolutionReference();
+
   settingsAccounts.querySelectorAll(".amount-input").forEach(input => {
     input.value = `${formatAmount(parseAmount(input.value))} €`;
   });
@@ -1178,6 +1180,7 @@ if ("serviceWorker" in navigator) {
 
 renderAccounts();
 renderLastUpdated();
+renderTotalEvolution();
 accountsList.addEventListener("pointerdown", event => {
   const card = event.target.closest(".account-card");
   if (card) card.classList.add("pressed");

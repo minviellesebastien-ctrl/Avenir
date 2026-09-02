@@ -1,7 +1,7 @@
 const STORAGE_KEY = "avenir-comptes-v6";
 const LEGACY_STORAGE_KEY = "avenir-comptes-v5";
 const EVOLUTION_REFERENCE_KEY = "avenir-total-reference-v1";
-const INITIAL_EVOLUTION_REFERENCE = 93400;
+const INITIAL_EVOLUTION_REFERENCE = 94269.40;
 
 
 
@@ -19,7 +19,7 @@ const ICONS = {
 };
 
 const DEFAULT_ACCOUNTS = [
-  { icon: "revolut", name: "REVOLUT", amount: 8446.36 },
+  { icon: "revolut", name: "REVOLUT", amount: 8719.93 },
   { icon: "livret-a", name: "LCL - Livret A", amount: 26003.44 },
   { icon: "ldd", name: "LCL - LDD", amount: 12747.87 },
   { icon: "lep", name: "LCL - LEP", amount: 10856.51 },

@@ -2,6 +2,9 @@ const STORAGE_KEY = "avenir-comptes-v6";
 const LEGACY_STORAGE_KEY = "avenir-comptes-v5";
 const EVOLUTION_REFERENCE_KEY = "avenir-total-reference-v1";
 const INITIAL_EVOLUTION_REFERENCE = 93400;
+
+localStorage.setItem(EVOLUTION_REFERENCE_KEY, String(INITIAL_EVOLUTION_REFERENCE));
+
 const UPDATED_KEY = "avenir-derniere-mise-a-jour-v6";
 const LEGACY_UPDATED_KEY = "avenir-derniere-mise-a-jour-v5";
 
